@@ -1,5 +1,4 @@
-import './App.css';
-import Header from "./Components/header/Header";
+import Header from "./components/header/Header";
 import React from 'react';
 
 function App() {
