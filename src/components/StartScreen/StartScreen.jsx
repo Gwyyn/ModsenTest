@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Map from "../map/Map";
-import Header from "../header/Header";
+import Map from "../Map/Map";
+import Header from "../Header/Header";
 
 
 const StartScreen = () => {

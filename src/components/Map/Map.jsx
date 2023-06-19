@@ -3,7 +3,7 @@ import {MapContainer, Marker, TileLayer, ZoomControl, Circle} from "react-leafle
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import UseGeoLocation from "../../hooks/useGeoLocation";
-import FlyToButton from "./FlyToButton";
+import FlyToButton from "../FlyToButton/FlyToButton";
 import iconImage from '../utilsItems/images/Vector.png';
 import './Map.css'
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import StartScreen from "./components/startScreen/StartScreen";
+import StartScreen from "./components/StartScreen/StartScreen";
 
 function App() {
   return (
