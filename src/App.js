@@ -1,10 +1,10 @@
-import Header from "./components/header/Header";
 import React from 'react';
+import StartScreen from "./components/startScreen/StartScreen";
 
 function App() {
   return (
     <div className="App">
-        <Header/>
+        <StartScreen/>
     </div>
   );
 }
