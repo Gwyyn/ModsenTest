@@ -18,7 +18,7 @@ const Map = () => {
     let myLat = location.coordinates ? location.coordinates.lat : DEFAULT_LAT;
     let myLng = location.coordinates ? location.coordinates.lng : DEFAULT_LNG;
 
-    const [center, setCenter] = useState({lat: DEFAULT_LAT, lng: DEFAULT_LNG});
+    const [center,  setCenter] = useState({lat: DEFAULT_LAT, lng: DEFAULT_LNG});
     console.log(center)
     const markerIcon = new L.Icon({
         iconUrl: iconImage,

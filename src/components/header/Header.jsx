@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../utilsItems/Logo";
 import SearchBtnOff from "../utilsItems/SearchBtn/SearchBtnOff";
 import FavoritesBtnOff from "../utilsItems/FavoritesBtn/FavoritesBtnOff";
 import Avatar from "../utilsItems/Avatar";
 import Map from "../map/Map";
+import SideBar from "../sideBar/SideBar";
+import SelectorEngine from "bootstrap/js/src/dom/selector-engine";
+import SearchBtnOn from "../utilsItems/SearchBtn/SearchBtnOn";
 
 
 const Header = () => {
 
-    // const [sideBar, isSideBar] = useState()
+    const [sideBar, setSideBar] = useState(true);
 
     return (
         <div
@@ -22,9 +26,9 @@ const Header = () => {
                         <a href="" className='mt-3 d-flex justify-content-center'>
                             <Logo/>
                         </a>
-                        <a href="" className='nav-link px-1 mt-4'>
-                            <SearchBtnOff/>
-                        </a>
+                        <Link to="/search" className='nav-link px-1 mt-4'>
+                            {sideBar ? <SearchBtnOff/>: <SearchBtnOn/> }
+                        </Link>
                         <a href="" className='nav-link px-1 mt-2'>
                             <FavoritesBtnOff/>
                         </a>
@@ -33,6 +37,11 @@ const Header = () => {
                         </a>
                     </div>
                 </div>
+
+                {sideBar &&
+                    <SideBar/>
+                }
+
                 <div
                     style={{paddingRight: 0}}
                     className='container-fluid m-0'
