@@ -12,7 +12,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
-    devtool: 'inline-source-Map',
+    devtool: 'inline-source-map',
     devServer: {
         port: 3000,
         hot: true
