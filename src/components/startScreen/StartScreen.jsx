@@ -12,16 +12,13 @@ const StartScreen = () => {
         >
             <div className=' d-flex flex-row'>
                 <Header/>
-
                 <div
                     style={{paddingRight: 0}}
                     className='container-fluid m-0'
                 >
                     <Map/>
                 </div>
-
             </div>
-
         </div>
     );
 };
