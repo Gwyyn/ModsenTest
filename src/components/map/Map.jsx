@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {MapContainer, Marker, TileLayer, ZoomControl} from "react-leaflet";
+import {MapContainer, Marker, TileLayer, ZoomControl, Circle} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import UseGeoLocation from "../../hooks/useGeoLocation";
@@ -13,12 +13,13 @@ const Map = () => {
     const ZOOM_LEVEL = 12;
     const DEFAULT_LAT = 53.9;
     const DEFAULT_LNG = 27.56667;
+    const DEFAULT_RADIUS = 100;
 
     const location = UseGeoLocation();
     let myLat = location.coordinates ? location.coordinates.lat : DEFAULT_LAT;
     let myLng = location.coordinates ? location.coordinates.lng : DEFAULT_LNG;
 
-    const [center,  setCenter] = useState({lat: DEFAULT_LAT, lng: DEFAULT_LNG});
+    const [center, setCenter] = useState({lat: DEFAULT_LAT, lng: DEFAULT_LNG});
     console.log(center)
     const markerIcon = new L.Icon({
         iconUrl: iconImage,
@@ -46,6 +47,15 @@ const Map = () => {
                         ]}
                         icon={markerIcon}
                     ></Marker>
+                )}
+                {location.loaded && !location.error && (
+                    <Circle
+                        center={[
+                            myLat,
+                            myLng
+                        ]}
+                        radius={DEFAULT_RADIUS}
+                    />
                 )}
                 <ZoomControl
                     opcity="0.8"
