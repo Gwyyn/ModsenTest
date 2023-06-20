@@ -1,10 +1,13 @@
 import React from 'react';
-import StartScreen from "./components/StartScreen/StartScreen";
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "./components/AppRouter/AppRouter";
 
 function App() {
   return (
     <div className="App">
-        <StartScreen/>
+        <BrowserRouter>
+            <AppRouter/>
+        </BrowserRouter>
     </div>
   );
 }
