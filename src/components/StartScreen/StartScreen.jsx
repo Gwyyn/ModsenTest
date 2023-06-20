@@ -11,7 +11,7 @@ const StartScreen = () => {
     const [sideBar, setSideBar] = useState(false);
 
     const toggleSideBar = () => {
-        setSideBar(!sideBar);
+        setSideBar((prev)=> !prev);
     };
 
     useEffect(() => {
