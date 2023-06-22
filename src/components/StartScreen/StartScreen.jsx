@@ -1,36 +1,48 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./StartScreen.css"
 import Map from "../Map/Map";
 import Header from "../Header/Header";
-import SideBar from "../SideBar/SideBar";
+import SideBarSearch from "../SideBarSearch/SideBarSearch";
+import SideBarFavorites from "../SideBarFavorites/SideBarFavorites";
 
 
 const StartScreen = () => {
 
-    const [activeBtn, setActiveBtn] = useState(true);
-    const [sideBar, setSideBar] = useState(false);
+    const [searchSideBar, setSearchSideBar] = useState(false);
+    const [searchBtnActive, setSearchBtnActive] = useState(false);
 
-    const toggleSideBar = () => {
-        setSideBar((prev)=> !prev);
+    const [favoritesSideBar, setFavoritesSideBar] = useState(false);
+    const [favoritesBtnActive, setFavoritesBtnActive] = useState(false);
+
+
+    const toggleSearchSideBar = () => {
+        if (!favoritesSideBar && !favoritesBtnActive) {
+            setSearchSideBar((prev) => !prev);
+            setSearchBtnActive((prev) => !prev);
+        }
+
     };
-
-    useEffect(() => {
-
-    }, [sideBar])
+    const toggleFavoritesSideBar = () => {
+        if (!searchSideBar && !searchBtnActive) {
+            setFavoritesSideBar((prev) => !prev);
+            setFavoritesBtnActive((prev) => !prev);
+        }
+    };
 
 
     return (
-        <div
-            style={{paddingRight: 0}}
-            className='container-fluid pr-0'
-        >
+        <div className='container-fluid pr-0 padding-right-0'>
             <div className=' d-flex flex-row'>
-                <Header onToggleSideBar={toggleSideBar}/>
-                {sideBar && <SideBar onToggleSideBar={toggleSideBar}/>}
-                <div
-                    style={{paddingRight: 0, paddingLeft: 0}}
-                    className='container-fluid m-0'
-                >
+                <Header
+                    onToggleSearchSideBar={toggleSearchSideBar}
+                    onToggleFavoritesSideBar={toggleFavoritesSideBar}
+                    searchBtnActive={searchBtnActive}
+                    favoritesBtnActive={favoritesBtnActive}
+                />
+                {searchSideBar && <SideBarSearch onToggleSearchSideBar={toggleSearchSideBar}/>}
+                {favoritesSideBar && <SideBarFavorites onToggleFavoritesSideBar={toggleFavoritesSideBar}/>}
+                <div className='container-fluid m-0 padding-left-0 padding-right-0'>
                     <Map/>
                 </div>
             </div>

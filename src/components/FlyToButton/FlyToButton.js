@@ -1,6 +1,6 @@
 import React from 'react';
 import {useMap} from "react-leaflet";
-import LocationBtn from "../utilsItems/locationBtn/LocationBtn";
+import LocationBtn from "../../assets/buttons/locationBtn/LocationBtn";
 import cl from './FlyToButton.module.css';
 
 const FlyToButton = ({lat, lng, zoom}) => {
