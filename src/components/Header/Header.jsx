@@ -4,7 +4,6 @@ import Logo from "../../assets/Logo.svg";
 import searchBtnOff from "../../assets/buttons/searchBtn/searchBtnOff.svg";
 import favoritesBtnOn from "../../assets/buttons/favoritesBtn/favoritesBtnOn.svg";
 import Avatar from "../../assets/Avatar.svg";
-import {Link} from "react-router-dom";
 import "./Header.css";
 import searchBtnOn from "../../assets/buttons/searchBtn/searchBtnOn.svg";
 import favoritesBtnOff from "../../assets/buttons/favoritesBtn/favoritesBtnOff.svg";
@@ -21,15 +20,16 @@ const Header = ({searchBtnActive, favoritesBtnActive, onToggleSearchSideBar, onT
                     <img src={Logo} alt=""/>
                 </a>
                 <div className='nav-link pointer px-1 mt-4 cursor-pointer' onClick={onToggleSearchSideBar}>
-                    {searchBtnActive ? <img src={searchBtnOn} alt=""/> : <img className="btn" src={searchBtnOff} alt=""/>}
+                    {searchBtnActive ? <img src={searchBtnOn} alt=""/> :
+                        <img className="btn" src={searchBtnOff} alt=""/>}
                 </div>
                 <div className='nav-link px-1 mt-2 cursor-pointer' onClick={onToggleFavoritesSideBar}>
                     {favoritesBtnActive ? <img src={favoritesBtnOn} alt=""/> :
                         <img  className="btn" src={favoritesBtnOff} alt=""/>}
                 </div>
-                <Link to="" className='nav-link px-1 position-absolute bottom-0 mb-4'>
+                <a href="" className='nav-link px-1 position-absolute bottom-0 mb-4'>
                     <img src={Avatar} alt=""/>
-                </Link>
+                </a>
             </div>
         </div>
     );

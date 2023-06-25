@@ -1,0 +1,17 @@
+.custom-list-item-meta .ant-list-item-meta-content {
+    width: auto !important;
+}
+.searchBox {
+    border-radius: 10px;
+    border: 2px solid rgba(140, 140, 140, 0.35);
+
+}
+
+.infiniteList_wrapper {
+    height: 75vh;
+    overflow: auto;
+    width: 95%;
+    padding: 0 10px;
+    border: 1px solid rgba(140, 140, 140, 0.35);
+    border-radius: 15px;
+}

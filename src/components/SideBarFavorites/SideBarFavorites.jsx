@@ -6,7 +6,7 @@ import rightArray from '../../assets/rightArray.svg'
 
 const SideBarFavorites = ({onToggleFavoritesSideBar}) => {
     return (
-        <div className="col-auto col-lg-2 col-md-3 col-sm-3 col-3 d-flex flex-row position-relative">
+        <div className="col-auto col-lg-3 col-md-4 col-sm-4 col-4 d-flex flex-row position-relative">
             <div className="w-100 p-3">
 
             </div>

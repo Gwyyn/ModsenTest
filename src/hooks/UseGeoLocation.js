@@ -4,7 +4,7 @@ const UseGeoLocation = () => {
 
     const [location, setLocation] = useState({
         loaded: false,
-        coordinates: {lat: "", lng: ""}
+        coordinates: {lat: null, lng: null}
     });
 
     const onSuccess = location => {

@@ -9,6 +9,8 @@ import SideBarFavorites from "../SideBarFavorites/SideBarFavorites";
 
 const StartScreen = () => {
 
+    const [selectPosition, setSelectPosition] = useState(null);
+
     const [searchSideBar, setSearchSideBar] = useState(false);
     const [searchBtnActive, setSearchBtnActive] = useState(false);
 
@@ -21,6 +23,12 @@ const StartScreen = () => {
             setSearchSideBar((prev) => !prev);
             setSearchBtnActive((prev) => !prev);
         }
+        if (favoritesSideBar && favoritesBtnActive) {
+            setSearchSideBar((prev) => !prev);
+            setSearchBtnActive((prev) => !prev);
+            setFavoritesSideBar((prev) => !prev);
+            setFavoritesBtnActive((prev) => !prev);
+        }
 
     };
     const toggleFavoritesSideBar = () => {
@@ -28,8 +36,13 @@ const StartScreen = () => {
             setFavoritesSideBar((prev) => !prev);
             setFavoritesBtnActive((prev) => !prev);
         }
+        if (searchSideBar && searchBtnActive) {
+            setSearchSideBar((prev) => !prev);
+            setSearchBtnActive((prev) => !prev);
+            setFavoritesSideBar((prev) => !prev);
+            setFavoritesBtnActive((prev) => !prev);
+        }
     };
-
 
     return (
         <div className='container-fluid pr-0 padding-right-0'>
@@ -40,10 +53,15 @@ const StartScreen = () => {
                     searchBtnActive={searchBtnActive}
                     favoritesBtnActive={favoritesBtnActive}
                 />
-                {searchSideBar && <SideBarSearch onToggleSearchSideBar={toggleSearchSideBar}/>}
+                {searchSideBar &&
+                    <SideBarSearch
+                        onToggleSearchSideBar={toggleSearchSideBar}
+                        setSelectPosition={setSelectPosition}
+                    />
+                }
                 {favoritesSideBar && <SideBarFavorites onToggleFavoritesSideBar={toggleFavoritesSideBar}/>}
                 <div className='container-fluid m-0 padding-left-0 padding-right-0'>
-                    <Map/>
+                    <Map selectPosition={selectPosition}/>
                 </div>
             </div>
         </div>
