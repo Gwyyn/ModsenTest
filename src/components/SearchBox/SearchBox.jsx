@@ -1,70 +1,70 @@
-import React, {useState} from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, {useRef} from 'react';
 import "./Search.css"
 import searchBigBtn from '../../assets/buttons/searchBigBtn/searchBigBtn.svg'
-import {List} from 'antd';
-import PlacesService from "../../API/PlacesService";
+
+import {LoadScript, StandaloneSearchBox} from "@react-google-maps/api"
 
 
 const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
 
 const SearchBox = (props) => {
-    const {setSelectPosition} = props;
-    const [searchText, setSearchText] = useState("")
-    const [listPlaces, setListPlaces] = useState([""])
 
-    const params = {
-        query: searchText,
-        key: GOOGLE_API_KEY
+    const {setSelectPosition, changeRadius, selectRadius} = props;
+
+    const inputRef = useRef();
+    const handlePlaceChanged = () => {
+        const [place] = inputRef.current.getPlaces();
+        setSelectPosition(place)
+    }
+
+    const handleInputChange = (e) => {
+        const {value} = e.target;
+        changeRadius(value);
     };
+
 
     return (
         <div className="d-flex justify-content-center align-items-center flex-column">
-            <div className="w-100 d-flex justify-content-center p-3 position-relative">
-                <input
-                    className="searchBox w-100"
-                    type="text"
-                    placeholder="Город, место..."
-                    value={searchText}
-                    onChange={(event) => {
-                        setSearchText(event.target.value)
-                    }}
-                />
-            </div>
+            <div className="w-100 p-3">
+                <LoadScript
+                    googleMapsApiKey={GOOGLE_API_KEY}
+                    libraries={["places"]}
+                >
+                    <StandaloneSearchBox
+                        onLoad={ref => (inputRef.current = ref)}
+                    >
+                        <input
+                            type="text"
+                            className="form-control w-100 searchBox"
+                            placeholder="Enter location"
 
-            <div className="infiniteList_wrapper">
-                <InfiniteScroll dataLength={listPlaces.length}>
-                    <List
-                        dataSource={listPlaces}
-                        renderItem={(item) => (
-                            <List.Item key={item.name}>
-                                <a onClick={() => {
-                                    setSelectPosition(item);
-                                }}>
-                                    <List.Item.Meta
-                                        className="custom-list-item-meta"
-                                        title={item.name}
-                                        description={item.formatted_address}
-                                    />
-                                </a>
-                            </List.Item>
-                        )}
-                    />
-                </InfiniteScroll>
+                        />
+                    </StandaloneSearchBox>
+                </LoadScript>
             </div>
-
             <div className="position-absolute bottom-0 mb-4 w-75">
                 <img
-                    className="w-100 "
+                    className="w-100"
                     src={searchBigBtn}
                     alt=""
-                    onClick={async () => {
-                        const queryString = new URLSearchParams(params).toString();
-                        const resultRequest = await PlacesService.searchPlaces(queryString)
-                        console.log(resultRequest)
-                        setListPlaces(resultRequest)
-                        console.log(listPlaces)
-                    }}/>
+                    onClick={handlePlaceChanged}
+                />
+            </div>
+            <div className=" d-flex flex-column toggleRadiusWrapper">
+                <div className="pb-2 fw-bold">В радиусе</div>
+                <div className="d-flex flex-row ">
+                    <input
+                        className="form-control toggleRadius"
+                        id="kilometer-input"
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={selectRadius}
+                        onChange={handleInputChange}
+                    />
+                    <div className="p-2 fw-bold"> км</div>
+                </div>
+
             </div>
         </div>
     );

@@ -13,12 +13,14 @@ const urlMap = process.env.REACT_APP_LEAFLET_URL;
 const ZOOM_LEVEL = 12;
 const DEFAULT_LAT = 53.9;
 const DEFAULT_LNG = 27.56667;
-const DEFAULT_RADIUS = 100;
+const DEFAULT_RADIUS = 1000;
+const MAX_RADIUS = 100000
 
 const Map = (props) => {
 
-    const {selectPosition} = props;
-    const locationSelection = [selectPosition?.geometry.location?.lat, selectPosition?.geometry.location?.lng]
+    const {selectPosition, selectRadius} = props;
+    const selectRadiusInKilom = selectRadius * 1000;
+    const locationSelection = [selectPosition?.geometry.location?.lat(), selectPosition?.geometry.location?.lng()]
     const location = UseGeoLocation();
 
     let myLat = location.coordinates ? location.coordinates.lat : DEFAULT_LAT;
@@ -48,8 +50,8 @@ const Map = (props) => {
             <MapContainer
                 center={center}
                 zoom={ZOOM_LEVEL}
-                style={{height: "100vh", width: "100%"}}
                 zoomControl={false}
+                className="mapContainer"
             >
                 <TileLayer
                     url={urlMap}
@@ -69,7 +71,8 @@ const Map = (props) => {
                             myLat,
                             myLng
                         ]}
-                        radius={DEFAULT_RADIUS}
+                        radius={
+                            selectRadiusInKilom <= MAX_RADIUS ? selectRadiusInKilom : DEFAULT_RADIUS}
                     />
                 )}
                 <ZoomControl

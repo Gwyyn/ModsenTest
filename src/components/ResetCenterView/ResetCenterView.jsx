@@ -8,7 +8,7 @@ const ResetCenterView = (props) => {
     useEffect(() => {
         if (selectPosition) {
             map.setView(
-                L.latLng(selectPosition?.geometry.location?.lat, selectPosition?.geometry.location?.lng),
+                L.latLng(selectPosition?.geometry.location?.lat(), selectPosition?.geometry.location?.lng()),
                 map.getZoom(),
                 {
                     animate: true

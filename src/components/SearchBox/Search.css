@@ -3,7 +3,7 @@
 }
 .searchBox {
     border-radius: 10px;
-    border: 2px solid rgba(140, 140, 140, 0.35);
+    border: 3px solid rgba(140, 140, 140, 0.35);
 
 }
 
@@ -14,4 +14,16 @@
     padding: 0 10px;
     border: 1px solid rgba(140, 140, 140, 0.35);
     border-radius: 15px;
+}
+
+.toggleRadius {
+    width: 45%;
+    border-radius: 10px;
+    border: 3px solid rgba(140, 140, 140, 0.35);
+}
+.toggleRadiusWrapper{
+    width: 75%;
+    padding: 30px;
+    position: absolute;
+    bottom: 20%;
 }
