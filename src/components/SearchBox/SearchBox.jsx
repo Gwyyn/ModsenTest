@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
+import {ListGroup} from "react-bootstrap";
 import "./Search.css"
 import searchBigBtn from '../../assets/buttons/searchBigBtn/searchBigBtn.svg'
-
 import {LoadScript, StandaloneSearchBox} from "@react-google-maps/api"
-
+import nature from '../../assets/categoriesIcons/nature.png'
 
 const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
 
@@ -21,6 +21,19 @@ const SearchBox = (props) => {
         const {value} = e.target;
         changeRadius(value);
     };
+
+    const categories = [
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+        { id: 1, icon: nature, name: 'Природа' },
+    ];
 
 
     return (
@@ -42,14 +55,17 @@ const SearchBox = (props) => {
                     </StandaloneSearchBox>
                 </LoadScript>
             </div>
-            <div className="position-absolute bottom-0 mb-4 w-75">
-                <img
-                    className="w-100"
-                    src={searchBigBtn}
-                    alt=""
-                    onClick={handlePlaceChanged}
-                />
+            <div  className="listCategories custom-scrollbar">
+                <ListGroup>
+                    {categories.map(item => (
+                        <ListGroup.Item key={item.id}>
+                            <img src={item.icon} alt={item.name} width="30" height="30"/> {item.name}
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
             </div>
+
+
             <div className=" d-flex flex-column toggleRadiusWrapper">
                 <div className="pb-2 fw-bold">В радиусе</div>
                 <div className="d-flex flex-row ">
@@ -59,12 +75,19 @@ const SearchBox = (props) => {
                         type="number"
                         min="0"
                         max="100"
-                        value={selectRadius}
+                        defaultValue="1"
                         onChange={handleInputChange}
                     />
                     <div className="p-2 fw-bold"> км</div>
                 </div>
-
+            </div>
+            <div className="position-absolute bottom-0 mb-4 w-75">
+                <img
+                    className="w-100"
+                    src={searchBigBtn}
+                    alt=""
+                    onClick={handlePlaceChanged}
+                />
             </div>
         </div>
     );

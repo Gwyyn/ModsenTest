@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Circle, MapContainer, Marker, TileLayer, ZoomControl} from "react-leaflet";
+import {Circle, MapContainer, Marker, Popup, TileLayer, ZoomControl} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import UseGeoLocation from "../../hooks/UseGeoLocation";
@@ -8,6 +8,7 @@ import iconImage from '../../assets/Vector.svg';
 import LocationMarker from "../../assets/LocationMarker.png"
 import './Map.css'
 import ResetCenterView from "../ResetCenterView/ResetCenterView";
+import {fetchPlacesFromOverpass} from "../../API/fetchPlacesFromOverpass";
 
 const urlMap = process.env.REACT_APP_LEAFLET_URL;
 const ZOOM_LEVEL = 12;
@@ -42,8 +43,22 @@ const Map = (props) => {
 
     const locationMarkerIcon = new L.Icon({
         iconUrl: LocationMarker,
-        iconSize: [38,38]
+        iconSize: [38, 38]
     })
+
+    const [places, setPlaces] = useState([]);
+    useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const places = await fetchPlacesFromOverpass(myLat, myLng, selectRadius, "cafe");
+                    setPlaces(places);
+
+                } catch (e) {
+                    console.error(e);
+                }
+        }
+        fetchData();
+    }, [myLat, myLng, selectRadius])
 
     return (
         <div>
@@ -63,7 +78,7 @@ const Map = (props) => {
                             myLng
                         ]}
                         icon={markerIcon}
-                    ></Marker>
+                    />
                 )}
                 {location.loaded && !location.error && (
                     <Circle
@@ -75,6 +90,18 @@ const Map = (props) => {
                             selectRadiusInKilom <= MAX_RADIUS ? selectRadiusInKilom : DEFAULT_RADIUS}
                     />
                 )}
+                {places.map((place, index) => (
+                    <Marker
+                        key={index}
+                        position={[place.lat, place.lon]}
+                        icon={locationMarkerIcon}
+                    >
+                        <Popup>
+                            <b>{place.amenity}:</b>&nbsp;
+                            {place.name}
+                        </Popup>
+                    </Marker>
+                ))}
                 <ZoomControl
                     opcity="0.8"
                     position="bottomleft"/>
@@ -83,7 +110,7 @@ const Map = (props) => {
                     <Marker
                         position={locationSelection}
                         icon={locationMarkerIcon}
-                    ></Marker>
+                    />
                 )}
                 <ResetCenterView selectPosition={selectPosition}/>
             </MapContainer>
