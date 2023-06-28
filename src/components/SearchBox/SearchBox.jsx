@@ -3,37 +3,36 @@ import {ListGroup} from "react-bootstrap";
 import "./Search.css"
 import searchBigBtn from '../../assets/buttons/searchBigBtn/searchBigBtn.svg'
 import {LoadScript, StandaloneSearchBox} from "@react-google-maps/api"
-import nature from '../../assets/categoriesIcons/nature.png'
+
 
 const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
+const libraries = ["places"];
 
 const SearchBox = (props) => {
 
-    const {setSelectPosition, changeRadius, selectRadius} = props;
+    const {setSelectPosition, changeRadius, categoriesState, setCategoriesState} = props;
 
     const inputRef = useRef();
+
     const handlePlaceChanged = () => {
         const [place] = inputRef.current.getPlaces();
         setSelectPosition(place)
     }
-
     const handleInputChange = (e) => {
         const {value} = e.target;
         changeRadius(value);
     };
 
-    const categories = [
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-        { id: 1, icon: nature, name: 'Природа' },
-    ];
+    const toggleCategory = (id) => {
+        setCategoriesState((prevCategories) => {
+            return prevCategories.map((category) => {
+                if (category.id === id) {
+                    return { ...category, isActive: !category.isActive };
+                }
+                return category;
+            });
+        });
+    };
 
 
     return (
@@ -41,7 +40,7 @@ const SearchBox = (props) => {
             <div className="w-100 p-3">
                 <LoadScript
                     googleMapsApiKey={GOOGLE_API_KEY}
-                    libraries={["places"]}
+                    libraries={libraries}
                 >
                     <StandaloneSearchBox
                         onLoad={ref => (inputRef.current = ref)}
@@ -55,10 +54,15 @@ const SearchBox = (props) => {
                     </StandaloneSearchBox>
                 </LoadScript>
             </div>
+
             <div  className="listCategories custom-scrollbar">
                 <ListGroup>
-                    {categories.map(item => (
-                        <ListGroup.Item key={item.id}>
+                    {categoriesState.map(item => (
+                        <ListGroup.Item
+                            key={item.id}
+                            className={item.isActive ? 'active' : ''}
+                            onClick={() => toggleCategory(item.id)}
+                        >
                             <img src={item.icon} alt={item.name} width="30" height="30"/> {item.name}
                         </ListGroup.Item>
                     ))}

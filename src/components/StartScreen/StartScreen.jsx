@@ -5,12 +5,13 @@ import Map from "../Map/Map";
 import Header from "../Header/Header";
 import SideBarSearch from "../SideBarSearch/SideBarSearch";
 import SideBarFavorites from "../SideBarFavorites/SideBarFavorites";
+import categories from "../utilItems/categories";
 
 
 const StartScreen = () => {
 
     const [selectPosition, setSelectPosition] = useState();
-
+    const [categoriesState, setCategoriesState] = useState(categories);
     const [selectRadius, setSelectRadius] = useState(1);
 
     const [searchSideBar, setSearchSideBar] = useState(true);
@@ -61,10 +62,11 @@ const StartScreen = () => {
                 />
                 {searchSideBar &&
                     <SideBarSearch
-                        onToggleSearchSideBar={toggleSearchSideBar}
                         setSelectPosition={setSelectPosition}
-                        selectRadius={selectRadius}
+                        onToggleSearchSideBar={toggleSearchSideBar}
                         changeRadius={handleInputChangeRadius}
+                        categoriesState={categoriesState}
+                        setCategoriesState={setCategoriesState}
                     />
                 }
                 {favoritesSideBar && <SideBarFavorites onToggleFavoritesSideBar={toggleFavoritesSideBar}/>}
@@ -72,6 +74,7 @@ const StartScreen = () => {
                     <Map
                         selectPosition={selectPosition}
                         selectRadius={selectRadius}
+                        categoriesState={categoriesState}
                     />
                 </div>
             </div>
