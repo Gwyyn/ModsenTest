@@ -3,8 +3,7 @@ import {useMap} from "react-leaflet";
 import LocationBtn from "../../assets/buttons/locationBtn/LocationBtn";
 import cl from './FlyToButton.module.css';
 
-const FlyToButton = ({lat, lng, zoom}) => {
-
+const FlyToButton = React.memo(({lat, lng, zoom}) => {
     const map = useMap();
 
     const handleClick = () => {
@@ -18,6 +17,6 @@ const FlyToButton = ({lat, lng, zoom}) => {
             <LocationBtn/>
         </div>
     );
-};
+})
 
 export default FlyToButton;

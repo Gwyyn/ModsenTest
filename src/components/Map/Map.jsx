@@ -1,38 +1,51 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Circle, MapContainer, Marker, Popup, TileLayer, ZoomControl} from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import UseGeoLocation from "../../hooks/UseGeoLocation";
 import FlyToButton from "../FlyToButton/FlyToButton";
-import iconImage from '../../assets/Vector.svg';
-import LocationMarker from "../../assets/LocationMarker.png"
 import defaultIcon from '../../assets/categoriesIcons/default.png'
 import './Map.css'
 import ResetCenterView from "../ResetCenterView/ResetCenterView";
 import {fetchPlacesFromOverpass} from "../../API/fetchPlacesFromOverpass";
+import {
+    DEFAULT_LAT,
+    DEFAULT_LNG,
+    DEFAULT_RADIUS,
+    DEFAULT_ZOOM,
+    locationMarkerIcon,
+    markerIcon,
+    MAX_RADIUS,
+    urlMap,
+    ZOOM_LEVEL
+} from "./config";
 
-const urlMap = process.env.REACT_APP_LEAFLET_URL;
-const ZOOM_LEVEL = 12;
-const DEFAULT_LAT = 53.9;
-const DEFAULT_LNG = 27.56667;
-const DEFAULT_RADIUS = 1000;
-const MAX_RADIUS = 100000
 
-const Map = (props) => {
-
+const Map = React.memo((props) => {
     const {selectPosition, selectRadius, categoriesState} = props;
+
+    const [center, setCenter] = useState({lat: DEFAULT_LAT, lng: DEFAULT_LNG});
+    const [places, setPlaces] = useState([]);
+
     const selectRadiusInKilom = selectRadius * 1000;
 
     const locationSelection = [selectPosition?.geometry.location?.lat(), selectPosition?.geometry.location?.lng()]
 
     const location = UseGeoLocation();
 
-    let myLat = location.coordinates ? location.coordinates.lat : DEFAULT_LAT;
-    let myLng = location.coordinates ? location.coordinates.lng : DEFAULT_LNG;
+    const myLat = location.coordinates ? location.coordinates.lat : DEFAULT_LAT;
+    const myLng = location.coordinates ? location.coordinates.lng : DEFAULT_LNG;
 
-    const [center, setCenter] = useState({lat: DEFAULT_LAT, lng: DEFAULT_LNG});
-    const [places, setPlaces] = useState([]);
 
+    const filteredPlaces = useMemo(() => {
+        return places.filter(({tags}) => {
+            const category = categoriesState.find(category => {
+                const [key, value] = category.type.split("=");
+                return tags[key.replace(/["']/g, "")] === value.replace(/["']/g, "");
+            });
+            return category && category.isActive;
+        });
+    }, [places, categoriesState]);
 
     useEffect(() => {
         if (location.loaded && !location.error && location.coordinates) {
@@ -43,28 +56,17 @@ const Map = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const activeCategories = categoriesState.filter(category => category.isActive);
-                const selectedTypes = activeCategories.map(category => category.type);
+                const selectedTypes = categoriesState
+                    .filter(category => category.isActive)
+                    .map(category => category.type)
                 const places = await fetchPlacesFromOverpass(myLat, myLng, selectRadius, selectedTypes);
                 setPlaces(places);
-                console.log(places)
             } catch (e) {
                 console.error(e);
             }
         }
         fetchData();
-    }, [myLat, myLng, selectRadius])
-
-    const markerIcon = new L.Icon({
-        iconUrl: iconImage,
-        iconSize: [32, 24],
-        iconAnchor: [16, 15],
-    })
-
-    const locationMarkerIcon = new L.Icon({
-        iconUrl: LocationMarker,
-        iconSize: [38, 38]
-    })
+    }, [myLat, myLng, selectRadius, categoriesState])
 
 
 
@@ -99,8 +101,11 @@ const Map = (props) => {
                     />
                 )}
 
-                {places.map((place, index) => {
-                    const category = categoriesState.find((category) => category.type === `"amenity"="${place.amenity}"`);
+                {filteredPlaces.map(({lat, lon, name, tags}, index) => {
+                    const category = categoriesState.find((category) => {
+                        const [key, value] = category.type.split("=");
+                        return tags[key.replace(/["']/g, "")] === value.replace(/["']/g, "");
+                    });
                     const iconUrl = category ? category.icon : defaultIcon;
                     const customIcon = L.icon({
                         iconUrl,
@@ -109,12 +114,12 @@ const Map = (props) => {
                     return (
                         <Marker
                             key={index}
-                            position={[place.lat, place.lon]}
+                            position={[lat, lon]}
                             icon={customIcon}
                         >
                             <Popup>
-                                <b>{place.amenity}:</b>&nbsp;
-                                {place.name}
+                                <b>{category.name}:</b>&nbsp;
+                                {name}
                             </Popup>
                         </Marker>
                     )
@@ -123,7 +128,7 @@ const Map = (props) => {
                 <ZoomControl
                     opcity="0.8"
                     position="bottomleft"/>
-                <FlyToButton lat={myLat} lng={myLng} zoom={16}/>
+                <FlyToButton lat={myLat} lng={myLng} zoom={DEFAULT_ZOOM}/>
                 {selectPosition && (
                     <Marker
                         position={locationSelection}
@@ -134,6 +139,6 @@ const Map = (props) => {
             </MapContainer>
         </div>
     );
-}
+})
 
 export default Map;

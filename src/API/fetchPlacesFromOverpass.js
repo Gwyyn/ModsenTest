@@ -34,25 +34,28 @@ export const fetchPlacesFromOverpass = async (lat, lng, radius, amenityTypes) =>
             throw error;
         }
     }
-    console.log(places)
+    console.log( places)
     return places;
 
 };
 
 const processData = (data) => {
     const places = [];
-
     for (const element of data.elements) {
-        if (element.tags && element.tags.name && element.lat && element.lon && element.tags.amenity !== undefined ) {
+        if (element.tags &&
+            Object.keys(element.tags).length > 0 &&
+            element.tags.name !== undefined &&
+            element.lat !== undefined &&
+            element.lon !== undefined
+        ) {
             const place = {
                 name: element.tags.name,
                 lat: element.lat,
                 lon: element.lon,
-                amenity: element.tags.amenity,
+                tags: element.tags
             };
             places.push(place);
         }
     }
-
     return places;
 };

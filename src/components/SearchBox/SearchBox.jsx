@@ -33,6 +33,9 @@ const SearchBox = (props) => {
             });
         });
     };
+    const handleToggleCategory = (id) => () => {
+        toggleCategory(id);
+    };
 
 
     return (
@@ -61,7 +64,7 @@ const SearchBox = (props) => {
                         <ListGroup.Item
                             key={item.id}
                             className={item.isActive ? 'active' : ''}
-                            onClick={() => toggleCategory(item.id)}
+                            onClick={handleToggleCategory(item.id)}
                         >
                             <img src={item.icon} alt={item.name} width="30" height="30"/> {item.name}
                         </ListGroup.Item>
