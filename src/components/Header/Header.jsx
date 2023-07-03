@@ -77,7 +77,10 @@ const Header = ({searchBtnActive, favoritesBtnActive, onToggleSearchSideBar, onT
                     <img src={Logo} alt=''/>
                 </a>
                 <div className='nav-link pointer px-1 mt-4 cursor-pointer' onClick={onToggleSearchSideBar}>
-                    {searchBtnActive ? <img src={searchBtnOn} alt=''/> :
+                    {searchBtnActive
+                        ?
+                        <img src={searchBtnOn} alt=''/>
+                        :
                         <img className='btn' src={searchBtnOff} alt=''/>}
                 </div>
                 <div className='nav-link px-1 mt-2 cursor-pointer' onClick={onToggleFavoritesSideBar}>
@@ -90,11 +93,12 @@ const Header = ({searchBtnActive, favoritesBtnActive, onToggleSearchSideBar, onT
                     onMouseLeave={handleMouseLeave}
                     className='nav-link px-1 position-absolute bottom-0 mb-4 cursor-pointer'
                 >
-                    {user != null ? (
+                    {user != null
+                        ?
                         <img src={user.photoURL} alt='avatar' className="avatar"/>
-                    ) : (
+                        :
                         <img src={login} alt='Login'/>
-                    )}
+                    }
                     {hovered && user != null && (
                         <img src={login} alt='Logout' className='img-login' onClick={handleAuth}/>
                     )}
