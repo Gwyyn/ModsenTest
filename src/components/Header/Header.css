@@ -13,3 +13,23 @@
 .btn {
     padding: 0;
 }
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid #a1a0a0;
+}
+
+.img-login {
+    opacity: 0.8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+
+}
