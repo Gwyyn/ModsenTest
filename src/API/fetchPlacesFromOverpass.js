@@ -34,7 +34,6 @@ export const fetchPlacesFromOverpass = async (lat, lng, radius, amenityTypes) =>
             throw error;
         }
     }
-    console.log( places)
     return places;
 
 };
