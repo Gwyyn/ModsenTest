@@ -1,10 +1,13 @@
 import React from 'react';
 import StartScreen from "./components/StartScreen/StartScreen";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 function App() {
   return (
     <div className="App">
-        <StartScreen/>
+        <ErrorBoundary>
+            <StartScreen/>
+        </ErrorBoundary>
     </div>
   );
 }

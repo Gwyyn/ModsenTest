@@ -14,7 +14,7 @@ const StartScreen = () => {
     const [categoriesState, setCategoriesState] = useState(categories);
     const [selectRadius, setSelectRadius] = useState(1);
 
-    const [searchSideBar, setSearchSideBar] = useState(true);
+    const [searchSideBar, setSearchSideBar] = useState(false);
     const [searchBtnActive, setSearchBtnActive] = useState(false);
 
     const [favoritesSideBar, setFavoritesSideBar] = useState(false);
