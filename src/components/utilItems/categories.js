@@ -15,21 +15,21 @@ import sleeping_place from '../../assets/categoriesIcons/sleeping place.png'
 import sport from '../../assets/categoriesIcons/sport.png'
 
 const categories = [
-    { id: 1, icon: nature.toString(), name: 'Природа', isActive: true,  type: `"leisure"="park"`},
-    { id: 2, icon: auto.toString(), name: 'Авто', isActive: true, type: `"amenity"="car_rental"`},
-    { id: 3, icon: bank.toString(), name: 'Банк', isActive: true, type: `"amenity"="bank"`  },
-    { id: 4, icon: bicycle.toString(), name: 'Велосипеды', isActive: true, type: `"amenity"="bicycle_rental"`},
-    { id: 5, icon: coffee.toString(), name: 'Кофе/чай', isActive: true, type: `"vending"="coffee"`},
-    { id: 6, icon: culture.toString(), name: 'Культура', isActive: true, type: `"tourism"="artwork"`},
-    { id: 7, icon: entertainment.toString(), name: 'Развлечения', isActive: true, type: `"leisure"="garden"`},
-    { id: 8, icon: factory.toString(), name: 'Индустриальные объекты', isActive: true, type: `"man_made"="works"`},
-    { id: 9, icon: food.toString(), name: 'Еда', isActive: true, type: `"amenity"="restaurant"`  },
-    { id: 10, icon: gas_station.toString(), name: 'Заправка', isActive: true, type: `"amenity"="fuel"`  },
-    { id: 11, icon: history.toString(), name: 'История', isActive: true, type: `"historic"="memorial"`  },
-    { id: 12, icon: religion.toString(), name: 'Религия', isActive: true, type: `"building"="church"`  },
-    { id: 13, icon: shop.toString(), name: 'Магазин', isActive: true, type: `"shop"`  },
-    { id: 14, icon: sleeping_place.toString(), name: 'Место для сна', isActive: true, type: `"tourism"="hotel"`  },
-    { id: 15, icon: sport.toString(), name: 'Спорт', isActive: true, type: `"leisure"="fitness_centre"`  },
+    { id: 1, icon: nature, name: 'Природа', isActive: true,  type: `"leisure"="park"`},
+    { id: 2, icon: auto, name: 'Авто', isActive: true, type: `"amenity"="car_rental"`},
+    { id: 3, icon: bank, name: 'Банк', isActive: true, type: `"amenity"="bank"`  },
+    { id: 4, icon: bicycle, name: 'Велосипеды', isActive: true, type: `"amenity"="bicycle_rental"`},
+    { id: 5, icon: coffee, name: 'Кофе/чай', isActive: true, type: `"vending"="coffee"`},
+    { id: 6, icon: culture, name: 'Культура', isActive: true, type: `"tourism"="artwork"`},
+    { id: 7, icon: entertainment, name: 'Развлечения', isActive: true, type: `"leisure"="garden"`},
+    { id: 8, icon: factory, name: 'Индустриальные объекты', isActive: true, type: `"man_made"="works"`},
+    { id: 9, icon: food, name: 'Еда', isActive: true, type: `"amenity"="restaurant"`  },
+    { id: 10, icon: gas_station, name: 'Заправка', isActive: true, type: `"amenity"="fuel"`  },
+    { id: 11, icon: history, name: 'История', isActive: true, type: `"historic"="memorial"`  },
+    { id: 12, icon: religion, name: 'Религия', isActive: true, type: `"building"="church"`  },
+    { id: 13, icon: shop, name: 'Магазин', isActive: true, type: `"shop"="supermarket"`  },
+    { id: 14, icon: sleeping_place, name: 'Место для сна', isActive: true, type: `"tourism"="hotel"`  },
+    { id: 15, icon: sport, name: 'Спорт', isActive: true, type: `"leisure"="fitness_centre"`  },
 ];
 
 export default categories;
